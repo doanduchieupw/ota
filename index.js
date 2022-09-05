@@ -31,7 +31,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/upload/:time_file.bin', (req, res) => {
-    let path = __dirname + '\\public\\upload\\'
+    let path = __dirname + '/public/upload/'
     console.log("🚀 ~ file: index.js ~ line 35 ~ router.get ~ path", path)
     let fileName = req.params.time_file + '.bin';
     console.log("🚀 ~ file: index.js ~ line 37 ~ router.get ~ fileName", fileName)
