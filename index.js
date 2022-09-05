@@ -1,9 +1,15 @@
 const express = require('express');
 const app = express();
 const http = require('http');
+const cors = require('cors');
+app.use(cors());
 const server = http.createServer(app);
 const { Server } = require('socket.io');
-const io = new Server(server);
+const io = new Server(server, {
+  cors:{
+    origin:'*',
+  }
+});
 const router = express.Router();
 
 router.get('/', (req, res) => {
@@ -21,9 +27,11 @@ router.get('/', (req, res) => {
 //     res.json({ file_url: fileUrl });
 // });
 
-io.on('connection', (socket) => {
-    console.log('da kjet noi')
-    socket.emit('firmware', { ver: Math.random() });
+io.on('connection', socket => {
+  console.log('Conection to socket.io');
+  socket.on('message', ({ name, message }) => {
+    io.emit('message', { name, message })
+  })
 });
 
 app.use(router);
