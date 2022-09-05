@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Upload Firmware</title>
+    </head>
+    <body>
+        <div>
+            <form id="uploadForm">
+                <input type="file" accept=".bin" name="firmware" id="firmware_input" />
+                <button type="submit" id="upload_btn">Upload</button>
+            </form>
+            <div id="state"></div>
+        </div>
+    </body>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        const uploadForm = document.getElementById('uploadForm');
+        const firmwareInput = document.getElementById('firmware_input');
+        const uploadBtn = document.getElementById('upload_btn');
+        const state = document.getElementById('state');
+
+        uploadForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            let formData = new FormData();
+            let firmwareUrl = '';
+            formData.append('firmware', firmwareInput.files['0']);
+
+            fetch('/firmware/upload', {
+                method: 'POST',
+                body: formData,
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    state.innerHTML = 'Done';
+                    console.log(data.file_url);
+                    firmwareUrl = data.file_url;
+                    socket.emit('update_firmware', {
+                        firmware_url: firmwareUrl,
+                    });
+                });
+        });
+    </script>
+</html>
