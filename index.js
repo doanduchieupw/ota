@@ -2,7 +2,6 @@ const express = require('express');
 
 const app = express();
 const router = express.Router();
-const port = 3000;
 
 router.get('/', (req, res) => {
     res.send('Hello World!');
@@ -10,7 +9,7 @@ router.get('/', (req, res) => {
 
 app.use(router);
 
-app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`);
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+    console.log(`Example app listening on port ${PORT}`);
 });
-
