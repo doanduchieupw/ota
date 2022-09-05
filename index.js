@@ -10,16 +10,16 @@ router.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
-router.post('/api/firmware', upload.single('firmware'), (req, res, next) => {
-    console.log(req.file);
-    let fileUrl = '';
-    if (req.file) {
-        fileUrl = 'firmwares/' + req.file.filename;
-    }
+// router.post('/api/firmware', upload.single('firmware'), (req, res, next) => {
+//     console.log(req.file);
+//     let fileUrl = '';
+//     if (req.file) {
+//         fileUrl = 'firmwares/' + req.file.filename;
+//     }
 
-    res.status(200);
-    res.json({ file_url: fileUrl });
-});
+//     res.status(200);
+//     res.json({ file_url: fileUrl });
+// });
 
 io.on('connection', (socket) => {
     console.log('a user connected');
