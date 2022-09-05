@@ -22,6 +22,7 @@ router.get('/', (req, res) => {
 // });
 
 io.on('connection', (socket) => {
+    console.log('da kjet noi')
     socket.emit('firmware', { ver: Math.random() });
 });
 
