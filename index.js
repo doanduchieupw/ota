@@ -22,7 +22,7 @@ router.get('/', (req, res) => {
 // });
 
 io.on('connection', (socket) => {
-    console.log('a user connected');
+    socket.emit('firmware', { ver: Math.random() });
 });
 
 app.use(router);
